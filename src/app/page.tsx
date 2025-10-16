@@ -248,9 +248,10 @@ export default function Page() {
       }
 
       // 👇 compress final PDF stream (significant size drop)
-      const blob = pdf.output("blob", { compress: true });
+const arrayBuffer = pdf.output("arraybuffer");
+const blob = new Blob([arrayBuffer], { type: "application/pdf" });
 
-      console.log("📄 Compressed PDF size:", blob.size / 1024 / 1024, "MB");
+console.log("📄 Compressed PDF size:", blob.size / 1024 / 1024, "MB");
 
       const formData = new FormData();
       formData.append("name", name);
@@ -343,7 +344,10 @@ export default function Page() {
             dataKey="value"
             outerRadius="70%"
             labelLine={false}
-            label={({ name, value }) => (value > 0 ? `${name}: ${value}%` : "")}
+            label={(props) => {
+  const { name, value } = props as unknown as { name: string; value: number };
+  return value > 0 ? `${name}: ${value}%` : "";
+}}
           >
             {pieData.map((entry, i) => (
               <Cell

@@ -51,12 +51,12 @@ export async function POST(req: Request) {
         <p>The audit PDF is attached.</p>
       `,
       attachments: [
-        {
-          filename: `${company}-brand-audit.pdf`,
-          content: buffer.toString("base64"),
-          type: "application/pdf",
-        },
-      ],
+  {
+    filename: `${company}-brand-audit.pdf`,
+    content: buffer.toString("base64"),
+    contentType: "application/pdf",
+  },
+],
     });
 
     // --- 🧩 Debug: log Resend response
